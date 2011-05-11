@@ -92,8 +92,8 @@ class Chef
         if name_args.empty?
           ui.error("please specify a cookbook to download and install")
           exit 1
-        elsif name_args.size > 1
-          ui.error("Installing multiple cookbooks at once is not supported")
+        elsif name_args.size > 2
+          ui.error("Usage: knife cookbook github install USER/REPO [BRANCH] (options)")
           exit 1
         else
           user, repo = name_args.first.split('/')

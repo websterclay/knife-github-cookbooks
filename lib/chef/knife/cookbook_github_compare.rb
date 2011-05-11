@@ -31,7 +31,7 @@ class Chef
         require File.join(File.dirname(__FILE__), 'core', 'coobook_scm_repo_extensions')
       end
 
-      banner "knife cookbook github compare COOKBOOK [BRANCH] (options)"
+      banner "knife cookbook github compare COOKBOOK [USER] (options)"
       category "cookbook site"
 
       option :cookbook_path,
@@ -80,8 +80,8 @@ class Chef
         if name_args.empty?
           ui.error("please specify a cookbook to download and install")
           exit 1
-        elsif name_args.size > 1
-          ui.error("Installing multiple cookbooks at once is not supported")
+        elsif name_args.size > 2
+          ui.error("USAGE: knife cookbook github compare COOKBOOK [USER] (options)")
           exit 1
         else
           name_args.first
@@ -89,14 +89,19 @@ class Chef
       end
 
       def compare_uri
-        "https://github.com/#{@github_path}/compare/#{@current_sha}...#{branch}"
+        if user
+          old_user, repo = @github_path.split("/")
+          "https://github.com/#{user}/#{repo}/compare/#{@current_sha}...master"
+        else
+          "https://github.com/#{@github_path}/compare/#{@current_sha}...master"
+        end
       end
 
-      def branch
+      def user
         if name_args.size > 1
           name_args.last
         else
-          'master'
+          nil
         end
       end
 
