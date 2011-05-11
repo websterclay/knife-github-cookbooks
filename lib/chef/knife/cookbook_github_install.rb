@@ -28,11 +28,10 @@ class Chef
       deps do
         require 'chef/mixin/shell_out'
         require 'chef/knife/core/cookbook_scm_repo'
-        require File.join(File.dirname(__FILE__), 'core', 'cookbook_scm_repo_extensions')
-        require 'chef/cookbook/metadata'
+        require File.join(File.dirname(__FILE__), 'core', 'coobook_scm_repo_extensions')
       end
 
-      banner "knife cookbook github install user/repo [BRANCH] (options)"
+      banner "knife cookbook github install USER/REPO [BRANCH] (options)"
       category "cookbook site"
 
       option :ssh,
@@ -47,7 +46,7 @@ class Chef
         :description => "A colon-separated path to look for cookbooks in",
         :proc => lambda { |o| o.split(":") }
 
-      option :branch_default,
+      option :default_branch,
         :short => "-B BRANCH",
         :long => "--branch BRANCH",
         :description => "Default branch to work with",
@@ -81,7 +80,7 @@ class Chef
         clear_existing_files(File.join(@install_path, @cookbook_name))
         move_cookbook
 
-        if @repo.finalize_updates_from_github(@cookbook_name, github_uri, sha)
+        if @repo.finalize_updates_from_github(@cookbook_name, "#{@github_user}/#{@github_repo}", sha)
           @repo.reset_to_default_state
           @repo.merge_updates_from(@cookbook_name, sha)
         else
