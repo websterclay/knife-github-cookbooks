@@ -15,10 +15,10 @@ Installation
 Motivation
 ----------
 
-The current "repo of cookbooks" pattern of neglects Chef's core unit of
-currency: the cookbook. Excellent cookbooks that developers have labored over
-for hours are lost in the sea of forks of `opscode/cookbooks`, hidden from the
-prying eyes of Google. Just look at this mess:
+The current "repo of cookbooks" pattern of sharing neglects Chef's core unit
+of currency: the cookbook. Excellent cookbooks that developers have labored
+over for hours are lost in the sea of forks of `opscode/cookbooks`, hidden
+from the prying eyes of Google. Just look at this mess:
 
 https://github.com/opscode/cookbooks/network/members
 
@@ -30,7 +30,7 @@ For pete's sake, folks, I thought this was DevOps! I'm a developer. I spend
 hours on Github everyday. Cookbooks should be individual Github repos, with
 all of the bells and whistles that come along with it. The network graph! Pull
 requests! Issues! The tools of a developer! Tarballs? Tarballs are what a
-smelly ops guy downloads between games of Quake.
+smelly sysadmin downloads between games of Quake.
 
 The hedgehog knows what I'm talking about:
 
