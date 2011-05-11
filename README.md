@@ -43,7 +43,7 @@ https://github.com/papercavalier/mongodb-cookbook/network
 Usage
 -----
 
-### Cookbook Installation
+### Installing Cookbooks
 
 Say you wanted to install the `yum` cookbook located at
 https://github.com/cookbooks/yum. To do so, you'd run the following command:
@@ -62,7 +62,7 @@ the `git@` URI, pass the `-S` option:
 
     knife cookbook github install my_stealthy_startup/secret_sauce -S
 
-### Cookbook Comparisons
+### Tracking Cookbook Changes
 
 Say you've seen some activity on one of the cookbooks you're using and you
 want to see what's new. There's magic for that too! Say you installed
@@ -86,7 +86,18 @@ the mongo cookbook. To see what they've added, just run the following:
 
     knife cookbook github compare mongodb erkki
 
-https://github.com/erkki/mongodb-cookbook/compare/9d413996b3db93f94bafc462e6dbdb092fac534a...master
+https://github.com/papercavalier/mongodb-cookbook/compare/9d413996b3db93f94bafc462e6dbdb092fac534a...erkki:master
+
+### Working with branches other than master
+
+If someone's made changes in another branch, you can compare the changes like
+so:
+
+    knife cookbook github compare mongodb jnewland/fix-bug
+
+Then install those changes like so:
+
+    knife cookbook github install jnewland/mongodb/fix-bug
 
 Epic. The tools of a developer.
 

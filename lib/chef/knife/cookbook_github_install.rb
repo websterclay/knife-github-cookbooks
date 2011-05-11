@@ -31,7 +31,7 @@ class Chef
         require File.join(File.dirname(__FILE__), 'core', 'coobook_scm_repo_extensions')
       end
 
-      banner "knife cookbook github install USER/REPO [BRANCH] (options)"
+      banner "knife cookbook github install USER/REPO [USER/REPO/BRANCH] (options)"
       category "cookbook site"
 
       option :ssh,
@@ -54,6 +54,7 @@ class Chef
 
       attr_reader :github_user
       attr_reader :github_repo
+      attr_reader :github_branch
       attr_reader :cookbook_name
 
       def run
@@ -65,7 +66,7 @@ class Chef
           config[:cookbook_path] = Chef::Config[:cookbook_path]
         end
 
-        @github_user, @github_repo, @cookbook_name = parse_name_args!
+        parse_name_args!
 
         @install_path = config[:cookbook_path].first
         ui.info "Installing #@cookbook_name from #{github_uri} to #{@install_path}"
@@ -92,17 +93,16 @@ class Chef
         if name_args.empty?
           ui.error("please specify a cookbook to download and install")
           exit 1
-        elsif name_args.size > 2
-          ui.error("Usage: knife cookbook github install USER/REPO [BRANCH] (options)")
+        elsif name_args.size > 1
+          ui.error("Usage: knife cookbook github install USER/REPO [USER/REPO/BRANCH] (options)")
           exit 1
         else
-          user, repo = name_args.first.split('/')
-          unless user && repo
+          @github_user, @github_repo, @github_branch = name_args.first.split('/')
+          unless @github_user && @github_repo
             ui.error("Expected a github user and a repo to download from: jnewland/chef_ipmi")
             exit 1
           end
-          name = repo.gsub(/[_-]?chef[-_]?/, '').gsub(/[_-]?cookbook[-_]?/, '')
-          return [user, repo, name]
+          @cookbook_name = @github_repo.gsub(/[_-]?chef[-_]?/, '').gsub(/[_-]?cookbook[-_]?/, '')
         end
       end
 
@@ -117,7 +117,7 @@ class Chef
       def clone_cookbook
         shell_out!("rm -rf #{temp_clone_path}", :cwd => tmpdir) if File.exists?(File.join(tmpdir, temp_clone_path))
         shell_out!("git clone #{github_uri} #{temp_clone_path}", :cwd => tmpdir)
-        shell_out!("git checkout #{branch}", :cwd => File.join(tmpdir, temp_clone_path))
+        shell_out!("git checkout #{github_branch}", :cwd => File.join(tmpdir, temp_clone_path))
         shell_out!("rm -rf .git", :cwd => File.join(tmpdir, temp_clone_path))
       end
 
@@ -139,15 +139,11 @@ class Chef
       end
 
       def sha
-        @sha ||= noauth_rest.get_rest("http://github.com/api/v2/json/repos/show/#{@github_user}/#{@github_repo}/branches")['branches'][branch]
+        @sha ||= noauth_rest.get_rest("http://github.com/api/v2/json/repos/show/#{@github_user}/#{@github_repo}/branches")['branches'][github_branch]
       end
 
-      def branch
-        if name_args.size > 1
-          name_args.last
-        else
-          'master'
-        end
+      def github_branch
+        @github_branch ||= 'master'
       end
 
     end
