@@ -4,8 +4,8 @@ knife-github-cookbooks
 Description
 -----------
 
-A knife plugin facilitating installing, updating, and tracking cookbooks found
-Github.
+A knife plugin facilitating installing, updating, and tracking Chef cookbooks
+found on Github.
 
 Installation
 ------------
