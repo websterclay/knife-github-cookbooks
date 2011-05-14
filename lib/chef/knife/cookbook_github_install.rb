@@ -102,7 +102,7 @@ class Chef
             ui.error("Expected a github user and a repo to download from: jnewland/chef_ipmi")
             exit 1
           end
-          @cookbook_name = @github_repo.gsub(/[_-]?chef[-_]?/, '').gsub(/[_-]?cookbook[-_]?/, '')
+          @cookbook_name = @github_repo.gsub(/[_-]?chef(?!-client)[-_]?/, '').gsub(/[_-]?cookbook[-_]?/, '')
         end
       end
 
@@ -149,3 +149,4 @@ class Chef
     end
   end
 end
+
