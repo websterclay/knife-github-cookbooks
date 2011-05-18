@@ -124,6 +124,11 @@ This plugin does not support automatically fetching cookbook dependencies,
 since version constraints are numeric and cookbook names can't specify the
 Github user. If you have an clever ideas for how this should work, hit me up.
 
+Bundler has been tried (see Bundler's pull request history), but is a no-go
+until it fixes its Git repo support. Git repo support was not a priority for
+Bundler core devs, so anyone should be aware if they do try to revisit this.
+
+
 Requirements
 ------------
 
