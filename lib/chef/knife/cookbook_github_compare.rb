@@ -32,7 +32,7 @@ class Chef
       end
 
       banner "knife cookbook github compare COOKBOOK [USER/BRANCH] (options)"
-      category "cookbook site"
+      category "cookbook"
 
       option :cookbook_path,
         :short => "-o PATH:PATH",

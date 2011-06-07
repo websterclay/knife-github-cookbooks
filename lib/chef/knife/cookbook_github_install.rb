@@ -32,7 +32,7 @@ class Chef
       end
 
       banner "knife cookbook github install USER/REPO [USER/REPO/BRANCH] (options)"
-      category "cookbook site"
+      category "cookbook"
 
       option :ssh,
        :short => "-S",
