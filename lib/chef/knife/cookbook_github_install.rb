@@ -19,6 +19,7 @@
 #
 
 require 'chef/knife'
+require 'tempfile'
 
 class Chef
   class Knife
@@ -112,7 +113,7 @@ class Chef
       end
 
       def tmpdir
-        ENV['TMPDIR']
+        Dir.tmpdir
       end
 
       def clone_cookbook
